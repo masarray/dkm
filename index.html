@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#143729">
+    <meta name="description" content="PWA DKM untuk transparansi keuangan masjid, progres qurban, dan panel kerja internal.">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icons/icon-192.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles/app.css">
+    <title>DKM Raudhatul Mukminin</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="eyebrow">Transparansi Keuangan Masjid</div>
+          <h1>Mushola Raudhatul Mukminin</h1>
+          <p class="subtitle">Pantau kondisi kas, progres qurban, dan kebutuhan event dengan cepat dari HP.</p>
+        </div>
+        <button class="login-pill" type="button">Login</button>
+      </header>
+
+      <main class="screen-stack">
+        <section class="screen active" id="screen-home" data-screen="home">
+          <section class="hero-panel">
+            <div class="hero-copy">
+              <span class="hero-chip">Publik</span>
+              <h2>Ringkas, tenang, dan mudah dipercaya warga.</h2>
+              <p>Seluruh ringkasan utama ditampilkan tanpa membuat layar terasa penuh. Fokusnya transparansi, bukan keramaian.</p>
+            </div>
+            <div class="hero-mark" aria-hidden="true"></div>
+          </section>
+
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <h3>Ringkasan Kas</h3>
+                <p>Kondisi dana utama yang paling sering ingin diketahui warga.</p>
+              </div>
+              <span class="section-kicker">Hari ini</span>
+            </div>
+
+            <article class="balance-card">
+              <div>
+                <span class="label">Saldo Kas Saat Ini</span>
+                <strong class="balance-amount" id="saldoKasValue">Rp 0</strong>
+              </div>
+              <span class="tone-badge" id="balanceToneValue">Memuat</span>
+            </article>
+
+            <div class="summary-grid">
+              <article class="summary-card positive">
+                <span class="label">Pemasukan</span>
+                <strong id="pemasukanValue">Rp 0</strong>
+              </article>
+              <article class="summary-card negative">
+                <span class="label">Pengeluaran</span>
+                <strong id="pengeluaranValue">Rp 0</strong>
+              </article>
+              <article class="summary-card neutral">
+                <span class="label">Saldo Operasional</span>
+                <strong id="saldoOperasionalValue">Rp 0</strong>
+              </article>
+              <article class="summary-card neutral">
+                <span class="label">Saldo Ramadhan</span>
+                <strong id="saldoRamadhanValue">Rp 0</strong>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <h3>Fokus Musim Ini</h3>
+                <p>Qurban tampil sebagai prioritas utama saat musimnya aktif.</p>
+              </div>
+              <span class="section-kicker soft">Qurban</span>
+            </div>
+
+            <article class="event-card">
+              <div class="event-topline">
+                <div>
+                  <span class="label">Dana Terkumpul</span>
+                  <strong id="qurbanDanaTerkumpulValue">Rp 0</strong>
+                </div>
+                <span class="progress-number" id="qurbanProgressValue">0%</span>
+              </div>
+              <div class="progress-rail">
+                <div class="progress-fill fill-low" id="qurbanProgressFill" style="width: 0%"></div>
+              </div>
+              <div class="event-footnote">
+                <span id="qurbanNeedValue">Masih butuh Rp 0</span>
+                <span id="qurbanSlotValue">Slot terisi 0 dari 0</span>
+              </div>
+            </article>
+
+            <div class="compact-list">
+              <article class="list-card">
+                <div>
+                  <strong id="qurbanHighlightTitle">Grup utama belum tersedia</strong>
+                  <p id="qurbanHighlightText">Data grup qurban akan tampil otomatis dari backend publik.</p>
+                </div>
+                <span class="mini-chip" id="qurbanHighlightBadge">Musiman</span>
+              </article>
+              <article class="list-card">
+                <div>
+                  <strong id="seasonalHeroTitle">Status event musiman</strong>
+                  <p id="seasonalHeroText">Mode hero akan mengikuti konfigurasi musim di backend Apps Script.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-event" data-screen="event">
+          <section class="section-card">
+            <div class="section-head">
+              <div>
+                <h3>Progress Qurban</h3>
+                <p>Ringkasan grup dan kebutuhan dana yang paling relevan saat ini.</p>
+              </div>
+            </div>
+
+            <div class="metric-strip">
+              <article class="metric-card">
+                <span class="label">Total Sapi</span>
+                <strong id="eventTotalSapiValue">0</strong>
+              </article>
+              <article class="metric-card">
+                <span class="label">Slot Terisi</span>
+                <strong id="eventSlotTerisiValue">0</strong>
+              </article>
+              <article class="metric-card">
+                <span class="label">Sisa Slot</span>
+                <strong id="eventSisaSlotValue">0</strong>
+              </article>
+              <article class="metric-card">
+                <span class="label">Dana Terkumpul</span>
+                <strong id="eventDanaValue">Rp 0</strong>
+              </article>
+            </div>
+
+            <div class="group-list" id="groupList"></div>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-login" data-screen="login">
+          <section class="section-card login-card">
+            <div class="section-head">
+              <div>
+                <h3>Masuk ke Panel Internal</h3>
+                <p>Bendahara dan pengurus memakai panel yang lebih cepat untuk input dan monitoring.</p>
+              </div>
+            </div>
+
+            <label class="field-label" for="emailInput">Email</label>
+            <input id="emailInput" class="field-input" type="email" placeholder="nama@email.com">
+
+            <div class="support-note">
+              Login akan diproses lewat backend Apps Script agar data dan role tetap aman.
+            </div>
+
+            <button class="primary-action" type="button">Lanjut Masuk</button>
+          </section>
+        </section>
+      </main>
+
+      <button class="fab" type="button" aria-label="Aksi cepat">+</button>
+
+      <nav class="bottom-nav" aria-label="Navigasi utama">
+        <button class="nav-item active" type="button" data-target="home">
+          <span>Home</span>
+          <small>Beranda</small>
+        </button>
+        <button class="nav-item" type="button" data-target="event">
+          <span>Event</span>
+          <small>Qurban</small>
+        </button>
+        <button class="nav-item" type="button" data-target="login">
+          <span>Login</span>
+          <small>Internal</small>
+        </button>
+      </nav>
+    </div>
+
+    <script src="./scripts/app.js"></script>
+  </body>
+</html>
