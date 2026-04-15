@@ -170,14 +170,14 @@ input {
 }
 
 .hero-panel::after {
-  content: "";
-  position: absolute;
-  right: -18px;
-  bottom: -18px;
-  width: 160px;
-  height: 160px;
-  border-radius: 40px;
-  background: rgba(255, 248, 233, 0.07);
+    content: "";
+    position: absolute;
+    right: 0px;
+    bottom: 10px;
+    width: 130px;
+    height: 130px;
+    border-radius: 40px;
+    background: rgba(255, 248, 233, 0.02);
 }
 
 .hero-copy {
@@ -213,14 +213,13 @@ input {
 
 .hero-mark {
   position: absolute;
-  right: 22px;
-  bottom: 26px;
-  width: 74px;
-  height: 74px;
+  right: 25px;
+  bottom: 35px;
+  width: 75px;
+  height: 75px;
   border-radius: 26px;
-  border: 1px solid rgba(255, 248, 233, 0.08);
   background:
-    linear-gradient(180deg, rgba(255, 248, 233, 0.08), rgba(255, 248, 233, 0.03));
+    linear-gradient(180deg, rgba(255, 248, 233, 0.07), rgba(255, 248, 233, 0.03));
 }
 
 .hero-mark img {
