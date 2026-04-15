@@ -224,8 +224,8 @@ input {
 }
 
 .hero-mark img {
-  width: 40px;
-  height: 40px;
+  width: 90px;
+  height: 90px;
   opacity: 0.85;
   position: absolute;
   top: 50%;
@@ -239,7 +239,6 @@ input {
   position: absolute;
   inset: 20px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 248, 233, 0.22);
 }
 
 .hero-mark::after {
