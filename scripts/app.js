@@ -125,17 +125,23 @@ function loadJsonp(url, timeoutMs = 15000) {
 }
 
 function setLoadingState() {
-  setText('saldoKasValue', 'Memuat...');
-  setText('pemasukanValue', 'Memuat...');
-  setText('pengeluaranValue', 'Memuat...');
-  setText('saldoOperasionalValue', 'Memuat...');
-  setText('saldoRamadhanValue', 'Memuat...');
-  setText('balanceToneValue', 'Loading');
+  setText('saldoKasValue', 'Rp 0');
+  setText('pemasukanValue', 'Rp 0');
+  setText('pengeluaranValue', 'Rp 0');
+  setText('saldoOperasionalValue', 'Rp 0');
+  setText('saldoRamadhanValue', 'Rp 0');
+  setText('balanceToneValue', '');
 
-  setText('qurbanDanaTerkumpulValue', 'Memuat...');
+  const balanceEl = document.getElementById('saldoKasValue');
+  if (balanceEl) balanceEl.classList.add('skeleton-loading');
+
+  const toneEl = document.getElementById('balanceToneValue');
+  if (toneEl) toneEl.classList.add('skeleton-loading');
+
+  setText('qurbanDanaTerkumpulValue', 'Rp 0');
   setText('qurbanProgressValue', '0%');
-  setText('qurbanNeedValue', 'Mengambil data backend...');
-  setText('qurbanSlotValue', 'Memuat data slot...');
+  setText('qurbanNeedValue', '');
+  setText('qurbanSlotValue', '');
   setProgress('qurbanProgressFill', 0, 'red');
 
   setText('eventTotalSapiValue', '0');
@@ -145,8 +151,7 @@ function setLoadingState() {
 
   const groupList = document.getElementById('groupList');
   if (groupList) {
-    groupList.innerHTML =
-      '<article class="group-card"><strong>Memuat data grup...</strong><div class="muted-line">Mohon tunggu sebentar.</div></article>';
+    groupList.innerHTML = '';
   }
 }
 
@@ -174,21 +179,42 @@ function renderPublicData(data) {
   const seasonal = data.seasonal || {};
   const groups = Array.isArray(qurban.groups) ? qurban.groups : [];
 
+  const updateWithFade = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('skeleton-loading');
+  };
+
   setText('saldoKasValue', formatCurrency(summary['Saldo Kas']));
+  updateWithFade('saldoKasValue');
+
   setText('pemasukanValue', formatCurrency(summary['Total Pemasukan']));
+  updateWithFade('pemasukanValue');
+
   setText('pengeluaranValue', formatCurrency(summary['Total Pengeluaran']));
+  updateWithFade('pengeluaranValue');
+
   setText('saldoOperasionalValue', formatCurrency(summary['Saldo Operasional']));
+  updateWithFade('saldoOperasionalValue');
+
   setText('saldoRamadhanValue', formatCurrency(summary['Saldo Ramadhan']));
+  updateWithFade('saldoRamadhanValue');
+
   setText('balanceToneValue', getBalanceTone(summary['Saldo Kas']));
+  updateWithFade('balanceToneValue');
 
   setText('qurbanDanaTerkumpulValue', formatCurrency(qurban.totalNominal));
+  updateWithFade('qurbanDanaTerkumpulValue');
+
   setText('qurbanProgressValue', `${safeNumber(qurban.progressPct)}%`);
+  updateWithFade('qurbanProgressValue');
+
   setText(
     'qurbanNeedValue',
     safeNumber(qurban.remainingNominal) > 0
       ? `Masih butuh ${formatCurrency(qurban.remainingNominal)}`
       : 'Target qurban sudah tercapai'
   );
+
   setText(
     'qurbanSlotValue',
     `Slot terisi ${safeNumber(qurban.totalFilled)} dari ${safeNumber(qurban.totalSlots)}`
@@ -196,9 +222,16 @@ function renderPublicData(data) {
   setProgress('qurbanProgressFill', safeNumber(qurban.progressPct), qurban.progressColor);
 
   setText('eventTotalSapiValue', safeNumber(qurban.totalGroups));
+  updateWithFade('eventTotalSapiValue');
+
   setText('eventSlotTerisiValue', safeNumber(qurban.totalFilled));
+  updateWithFade('eventSlotTerisiValue');
+
   setText('eventSisaSlotValue', safeNumber(qurban.totalEmpty));
+  updateWithFade('eventSisaSlotValue');
+
   setText('eventDanaValue', formatCurrency(qurban.totalNominal));
+  updateWithFade('eventDanaValue');
 
   renderGroupList(groups);
   renderHeroNotes(groups, seasonal);
@@ -241,17 +274,21 @@ function renderGroupList(groups) {
   container.innerHTML = '';
 
   if (!groups.length) {
-    container.innerHTML =
-      '<article class="group-card"><strong>Belum ada data grup</strong><div class="muted-line">Data qurban akan tampil setelah backend publik terbaca.</div></article>';
+    const emptyCard = document.createElement('article');
+    emptyCard.className = 'group-card fade-in';
+    emptyCard.innerHTML =
+      '<strong>Belum ada data grup</strong><div class="muted-line">Data qurban akan tampil setelah backend publik terbaca.</div>';
+    container.appendChild(emptyCard);
     return;
   }
 
-  groups.forEach(group => {
+  groups.forEach((group, index) => {
     const progressClass = mapProgressClass(group.paymentProgressColor);
     const fillColor = group.fillPct >= 90 ? 'green' : group.fillPct >= 60 ? 'yellow' : 'red';
 
     const card = document.createElement('article');
-    card.className = 'group-card';
+    card.className = 'group-card fade-in';
+    card.style.animationDelay = `${index * 50}ms`;
     card.innerHTML = `
       <div class="group-head">
         <strong>${escapeHtml(group.groupName || '-')}</strong>

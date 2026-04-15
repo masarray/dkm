@@ -1,10 +1,10 @@
 :root {
   --bg: #f7f3ea;
-  --bg-glow: rgba(186, 162, 100, 0.14);
-  --surface: rgba(255, 252, 246, 0.92);
+  --bg-glow: rgba(186, 162, 100, 0.08);
+  --surface: rgba(255, 252, 246, 0.55);
   --surface-strong: #fffdfa;
   --line: #e7dfd1;
-  --line-soft: rgba(231, 223, 209, 0.65);
+  --line-soft: rgba(231, 223, 209, 0.5);
   --text: #173426;
   --muted: #6f7b71;
   --heading: #11281d;
@@ -15,8 +15,10 @@
   --gold-text: #786847;
   --fab: #202b46;
   --fab-active: #141e34;
-  --shadow-soft: 0 18px 40px rgba(27, 39, 30, 0.08);
-  --shadow-elevated: 0 20px 44px rgba(27, 39, 30, 0.12);
+  --shadow-sm: 0 2px 8px rgba(27, 39, 30, 0.04);
+  --shadow-md: 0 8px 16px rgba(27, 39, 30, 0.08);
+  --shadow-lg: 0 12px 24px rgba(27, 39, 30, 0.1);
+  --shadow-xl: 0 20px 40px rgba(27, 39, 30, 0.12);
   --radius-xl: 28px;
   --radius-lg: 22px;
   --radius-md: 18px;
@@ -152,9 +154,10 @@ input {
 .metric-card,
 .group-card,
 .login-card {
-  border: 1px solid var(--line-soft);
-  background: var(--surface);
-  box-shadow: var(--shadow-soft);
+  border: 1.2px solid var(--line);
+  background: linear-gradient(135deg, rgba(255, 252, 246, 0.7), rgba(255, 250, 241, 0.5));
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-md);
 }
 
 .hero-panel {
@@ -162,11 +165,14 @@ input {
   position: relative;
   border-radius: 30px;
   background:
-    radial-gradient(circle at 88% 22%, rgba(255, 247, 229, 0.1), transparent 18%),
-    linear-gradient(155deg, #18482f 0%, #1d5d3c 56%, #285f41 100%);
+    radial-gradient(circle at 88% 22%, rgba(255, 247, 229, 0.08), transparent 16%),
+    linear-gradient(155deg, #164a2c 0%, #1a5c38 48%, #24673f 100%);
   color: #fffef9;
-  padding: 22px 22px 24px;
-  min-height: 228px;
+  padding: 28px 24px 32px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .hero-panel::after {
@@ -213,19 +219,20 @@ input {
 
 .hero-mark {
   position: absolute;
-  right: 25px;
-  bottom: 35px;
-  width: 75px;
-  height: 75px;
-  border-radius: 26px;
+  right: 18px;
+  bottom: 28px;
+  width: 85px;
+  height: 85px;
+  border-radius: 28px;
   background:
-    linear-gradient(180deg, rgba(255, 248, 233, 0.07), rgba(255, 248, 233, 0.03));
+    linear-gradient(135deg, rgba(255, 248, 233, 0.1), rgba(255, 248, 233, 0.04));
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .hero-mark img {
-  width: 90px;
-  height: 90px;
-  opacity: 0.85;
+  width: 100px;
+  height: 100px;
+  opacity: 0.9;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -307,12 +314,12 @@ input {
 
 .balance-amount {
   display: block;
-  margin-top: 6px;
-  font-size: 38px;
-  font-weight: 600;
+  margin-top: 8px;
+  font-size: 48px;
+  font-weight: 700;
   line-height: 1;
   color: var(--primary-strong);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
 }
 
 .tone-badge {
@@ -348,7 +355,8 @@ input {
 .metric-card strong {
   display: block;
   margin-top: 10px;
-  font-size: 25px;
+  font-size: 32px;
+  font-weight: 700;
   line-height: 1.04;
   letter-spacing: -0.03em;
 }
@@ -384,9 +392,10 @@ input {
 .event-topline strong {
   display: block;
   margin-top: 8px;
-  font-size: 29px;
+  font-size: 36px;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
 }
 
 .progress-number {
@@ -397,15 +406,16 @@ input {
 
 .progress-rail {
   width: 100%;
-  height: 12px;
+  height: 14px;
   margin-top: 14px;
   border-radius: 999px;
-  background: #ebe9e0;
+  background: rgba(231, 223, 209, 0.6);
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(27, 39, 30, 0.08);
 }
 
 .progress-rail.thin {
-  height: 10px;
+  height: 12px;
   margin-top: 10px;
 }
 
@@ -525,10 +535,11 @@ input {
   bottom: 14px;
   transform: translateX(-50%);
   width: min(500px, calc(100vw - 24px));
-  background: rgba(255, 253, 249, 0.95);
-  border: 1px solid var(--line);
+  background: linear-gradient(135deg, rgba(255, 253, 249, 0.8), rgba(255, 250, 241, 0.6));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(231, 223, 209, 0.6);
   border-radius: 26px;
-  box-shadow: var(--shadow-elevated);
+  box-shadow: var(--shadow-lg);
   padding: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -558,8 +569,9 @@ input {
 }
 
 .nav-item.active {
-  background: linear-gradient(180deg, #edf4ee 0%, #eef5ef 100%);
+  background: linear-gradient(180deg, #dbe9de 0%, #dfe9e0 100%);
   color: var(--primary-strong);
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-item:active {
@@ -586,6 +598,45 @@ input {
 .fab:active {
   background: linear-gradient(180deg, var(--fab-active) 0%, #0f1830 100%);
   transform: scale(0.96);
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.skeleton-loading {
+  background: linear-gradient(90deg, rgba(231, 223, 209, 0.3) 0%, rgba(231, 223, 209, 0.6) 50%, rgba(231, 223, 209, 0.3) 100%);
+  background-size: 1000px 100%;
+  animation: skeleton-shimmer 2s infinite;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 560px) {
